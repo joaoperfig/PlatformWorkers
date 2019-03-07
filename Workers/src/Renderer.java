@@ -27,7 +27,7 @@ public class Renderer extends JPanel {
 	    JFrame frame = new JFrame("Workers");
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    frame.add(this);
-	    frame.setSize(Workshop.width*unitSize,Workshop.width*unitSize);  
+	    frame.setSize((Workshop.width+1)*unitSize,(Workshop.height+1)*unitSize);  
 	    frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);
 	}
@@ -35,7 +35,7 @@ public class Renderer extends JPanel {
 	public void paintComponent(Graphics g) {
 	    super.paintComponent(g);
 	    Graphics2D g2d = (Graphics2D) g;	    
-		g2d.clearRect(0, 0, Workshop.width*unitSize,Workshop.width*unitSize);
+		g2d.clearRect(0, 0, Workshop.width*unitSize,Workshop.height*unitSize);
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.fillRect(workshop.ramp.x*unitSize, workshop.ramp.y*unitSize, workshop.ramp.width*unitSize, workshop.ramp.height*unitSize);
 		for (int i=0; i< workshop.shelves.size(); i++) {
@@ -43,22 +43,9 @@ public class Renderer extends JPanel {
 			g2d.setColor(colors.get(s.color));
 			g2d.fillRect(s.x*unitSize, s.y*unitSize, s.width*unitSize, s.height*unitSize);
 		}
-		for (int i=0; i< workshop.boxes.size(); i++) {
-			Box b = workshop.boxes.get(i);
-			
-			int allstart = (int)((0.5)*unitSize);
-			
-			g2d.setColor(Color.BLACK);
-			int outsize = (int)((0.8)*unitSize);
-			fillCenteredRect(g2d, b.x*unitSize+allstart, b.y*unitSize+allstart, outsize, outsize);
-			g2d.setColor(colors.get(b.color));
-			int insize = (int)((0.5)*unitSize);
-			fillCenteredRect(g2d, b.x*unitSize+allstart, b.y*unitSize+allstart, insize, insize);
-			//System.out.println("x "+b.x+" y "+b.y+" outstart "+outstart+" outsize "+outsize+" instart "+instart+" insize "+insize);
-		}
 		for (int i=0; i<workshop.workers.size(); i++) {
 			Worker w = workshop.workers.get(i);
-			g2d.setColor(Color.BLACK);
+			g2d.setColor(w.color);
 			
 			int allstart = (int)((0.5)*unitSize);
 			
@@ -77,6 +64,20 @@ public class Renderer extends JPanel {
 			fillCenteredRect(g2d, w.x*unitSize+allstart, w.y*unitSize+allstart, midsize, midsize);
 			fillCenteredRect(g2d, w.x*unitSize+allstart+(xdelta*frontdist), w.y*unitSize+allstart+(ydelta*frontdist), frontsize, frontsize);
 		}
+		for (int i=0; i< workshop.boxes.size(); i++) {
+			Box b = workshop.boxes.get(i);
+			
+			int allstart = (int)((0.5)*unitSize);
+			
+			g2d.setColor(Color.BLACK);
+			int outsize = (int)((0.8)*unitSize);
+			fillCenteredRect(g2d, b.x*unitSize+allstart, b.y*unitSize+allstart, outsize, outsize);
+			g2d.setColor(colors.get(b.color));
+			int insize = (int)((0.5)*unitSize);
+			fillCenteredRect(g2d, b.x*unitSize+allstart, b.y*unitSize+allstart, insize, insize);
+			//System.out.println("x "+b.x+" y "+b.y+" outstart "+outstart+" outsize "+outsize+" instart "+instart+" insize "+insize);
+		}
+
 	}
 	
 	private void fillCenteredRect(Graphics g, int x, int y, int width, int height) {

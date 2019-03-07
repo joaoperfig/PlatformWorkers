@@ -53,4 +53,37 @@ public class Direction {
 		return 999; //ERROR HAPPENED
 	}
 	
+	public static int directionFromVector(int x, int y) {
+		if (y==0) {
+			if (x>0) {
+				return right;
+			} else {
+				return left;
+			}
+		} else if (x==0) {
+			if (y>0) {
+				return down;
+			} else {
+				return up;
+			}
+		} else {
+			return directionFromVector(x, 0);
+		}
+	}
+	
+	public static int directionTo(int fromx, int fromy, int tox, int toy) {
+		int dirx = tox-fromx;
+		int diry = toy-fromy;
+		if (dirx >0) dirx=1;
+		if (dirx <0) dirx=-1;
+		if (diry >0) diry=1;
+		if (diry <0) diry=-1;
+		
+		if((dirx!=0) && (diry!=0)){
+			diry=0;
+		}
+		
+		return directionFromVector(dirx, diry);
+	}
+	
 }

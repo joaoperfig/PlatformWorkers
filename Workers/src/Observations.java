@@ -11,4 +11,7 @@ public class Observations {
 	public boolean workerInFront;
 	public int x;
 	public int y;
+	public int frontx;
+	public int fronty;
+	public int direction;
 }

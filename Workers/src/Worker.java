@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.util.Random;
 
 public class Worker {
 	public int x;
@@ -6,6 +8,7 @@ public class Worker {
 	private WorkerIntelligence intel;
 	private boolean carrying;
 	private Box carried;
+	public Color color;
 
 	public Worker(int x, int y, int direction) {
 		super();
@@ -13,7 +16,9 @@ public class Worker {
 		this.y = y;
 		this.direction = direction;
 		carrying = false;
-		intel = new BasicIntelligence();
+		intel = new StateIntelligence();//new BasicIntelligence();
+		Random random = new Random();
+		color = Color.getHSBColor(random.nextFloat(), 1f, 0.45f);
 	}
 	
 	public void update(Workshop ws) {
@@ -22,6 +27,9 @@ public class Worker {
 		int fronty = y+Direction.gety(direction);
 		obs.x = x;
 		obs.y = y;
+		obs.frontx = frontx;
+		obs.fronty = fronty;
+		obs.direction = direction;
 		if((frontx<0)||(frontx>=Workshop.width)||(fronty<0)||(fronty>=Workshop.height)) {
 			//System.out.println("Out of bounds");
 			obs.obstacleInFront = true;
